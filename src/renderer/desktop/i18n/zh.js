@@ -105,6 +105,7 @@ export const zh = {
       custom: '保留应用管理中的自定义方案',
     },
     desktopDisplayLayouts: {
+      none: '无操作',
       active: '保证目标显示器已启用',
       primary: '设置为主显示器',
       secondary: '设置为扩展副屏',
@@ -123,12 +124,6 @@ export const zh = {
     desktopRefreshRateMode: '刷新率',
     desktopRefreshRateModeDesc: '可跟随全局、使用 Moonlight 本次请求，或指定固定刷新率',
     desktopFixedRefreshRate: '固定刷新率',
-    desktopVddIdentity: '虚拟显示器身份',
-    desktopVddIdentityDesc: '决定不同应用和客户端是否共用同一个基地虚拟显示器身份',
-    desktopVddIdentities: {
-      app: 'Desktop 应用共用',
-      appClient: 'Desktop 与每个客户端分别独立',
-    },
     desktopDisconnectAction: '最后一个客户端断开时',
     desktopDisconnectActionDesc: '保留当前显示状态等待恢复，或立即恢复原来的物理显示布局',
     desktopDisconnectActions: {

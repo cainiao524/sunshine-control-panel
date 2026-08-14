@@ -258,19 +258,6 @@
                 placeholder="60"
               />
             </div>
-            <div v-if="desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.VIRTUAL" class="setting-row display-profile-row">
-              <div class="setting-info">
-                <div class="setting-label">{{ t.stream.desktopVddIdentity }}</div>
-                <div class="setting-desc">{{ t.stream.desktopVddIdentityDesc }}</div>
-              </div>
-              <FdDropdown
-                :model-value="desktopDisplayProfile.vddIdentity"
-                @update:model-value="setDesktopDisplayProfileField('vddIdentity', $event)"
-                class="display-profile-dropdown"
-                :options="desktopVddIdentityOptions"
-                :placeholder="t.stream.desktopVddIdentity"
-              />
-            </div>
             <div class="setting-row display-profile-row">
               <div class="setting-info">
                 <div class="setting-label">{{ t.stream.desktopDisconnectAction }}</div>
@@ -546,6 +533,7 @@ const desktopDisplayModeOptions = computed(() => [
 ])
 
 const desktopDisplayLayoutOptions = computed(() => [
+  { value: 'no_operation', label: t.value.stream.desktopDisplayLayouts.none },
   { value: 'ensure_active', label: t.value.stream.desktopDisplayLayouts.active },
   { value: 'ensure_primary', label: t.value.stream.desktopDisplayLayouts.primary },
   { value: 'ensure_secondary', label: t.value.stream.desktopDisplayLayouts.secondary },
@@ -559,12 +547,6 @@ const desktopResolutionModeOptions = computed(() => [
 ])
 
 const desktopRefreshRateModeOptions = computed(() => desktopResolutionModeOptions.value)
-
-const desktopVddIdentityOptions = computed(() => [
-  { value: '', label: t.value.stream.desktopDisplayValues.inherit },
-  { value: 'app', label: t.value.stream.desktopVddIdentities.app },
-  { value: 'app-client', label: t.value.stream.desktopVddIdentities.appClient },
-])
 
 const desktopDisconnectOptions = computed(() => [
   { value: 'keep', label: t.value.stream.desktopDisconnectActions.keep },

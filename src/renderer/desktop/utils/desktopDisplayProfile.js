@@ -13,22 +13,9 @@ export const DEFAULT_DESKTOP_DISPLAY_PROFILE = Object.freeze({
   resolution: '',
   refreshRateMode: '',
   refreshRate: '',
-  vddIdentity: 'app-client',
   outputName: '',
   disconnectAction: 'keep',
 })
-
-const DISPLAY_PROFILE_FIELDS = Object.freeze([
-  'display-target',
-  'display-device-prep',
-  'display-resolution-mode',
-  'display-resolution',
-  'display-refresh-rate-mode',
-  'display-refresh-rate',
-  'display-vdd-identity',
-  'display-output-name',
-  'display-disconnect-action',
-])
 
 const DESKTOP_APP_NAMES = new Set(['Desktop', '桌面'])
 const RESOLUTION_PATTERN = /^[1-9]\d{1,4}x[1-9]\d{1,4}$/
@@ -54,9 +41,6 @@ export function readDesktopDisplayProfile(app) {
     resolution: String(app?.['display-resolution'] || ''),
     refreshRateMode: String(app?.['display-refresh-rate-mode'] || ''),
     refreshRate: String(app?.['display-refresh-rate'] || ''),
-    vddIdentity: target
-      ? String(app?.['display-vdd-identity'] || '')
-      : DEFAULT_DESKTOP_DISPLAY_PROFILE.vddIdentity,
     outputName: String(app?.['display-output-name'] || ''),
     disconnectAction: String(app?.['display-disconnect-action'] || DEFAULT_DESKTOP_DISPLAY_PROFILE.disconnectAction),
   }
@@ -74,10 +58,11 @@ export function validateDesktopDisplayProfile(profile) {
 }
 
 export function applyDesktopDisplayProfile(app, profile) {
-  const updated = { ...app }
-  if (profile?.mode === DESKTOP_DISPLAY_MODES.CUSTOM) return updated
+  if (profile?.mode === DESKTOP_DISPLAY_MODES.CUSTOM) return { ...app }
 
-  for (const key of DISPLAY_PROFILE_FIELDS) delete updated[key]
+  const updated = Object.fromEntries(
+    Object.entries(app).filter(([key]) => !key.startsWith('display-')),
+  )
   if (profile?.mode === DESKTOP_DISPLAY_MODES.ADAPT_CLIENT) return updated
 
   if (profile?.mode === DESKTOP_DISPLAY_MODES.CURRENT_PHYSICAL) {
@@ -106,10 +91,6 @@ export function applyDesktopDisplayProfile(app, profile) {
     if (profile.refreshRateMode === 'fixed') {
       updated['display-refresh-rate'] = String(profile.refreshRate || '').trim()
     }
-  }
-
-  if (profile.mode === DESKTOP_DISPLAY_MODES.VIRTUAL && profile.vddIdentity) {
-    updated['display-vdd-identity'] = String(profile.vddIdentity)
   }
 
   if (profile.mode === DESKTOP_DISPLAY_MODES.PHYSICAL) {

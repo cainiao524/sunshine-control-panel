@@ -54,7 +54,6 @@ test('完整虚拟显示方案能够往返读取和保存', () => {
     resolution: '2560x1600',
     refreshRateMode: 'fixed',
     refreshRate: '120',
-    vddIdentity: 'app',
     disconnectAction: 'restore',
   }
   const updated = applyDesktopDisplayProfile({ name: 'Desktop' }, profile)
@@ -62,21 +61,9 @@ test('完整虚拟显示方案能够往返读取和保存', () => {
   assert.deepEqual(readDesktopDisplayProfile(updated), profile)
 })
 
-test('已有虚拟方案未指定身份时继续跟随全局身份设置', () => {
-  const profile = readDesktopDisplayProfile({
-    name: 'Desktop',
-    'display-target': 'virtual',
-    'display-device-prep': 'ensure_active',
-  })
-
-  assert.equal(profile.vddIdentity, '')
-  const updated = applyDesktopDisplayProfile({ name: 'Desktop' }, profile)
-  assert.equal(updated['display-vdd-identity'], undefined)
-})
-
-test('完整物理显示方案不会保存虚拟屏身份', () => {
+test('完整物理显示方案保存指定显示器', () => {
   const updated = applyDesktopDisplayProfile(
-    { name: 'Desktop', 'display-vdd-identity': 'app-client' },
+    { name: 'Desktop' },
     {
       ...DEFAULT_DESKTOP_DISPLAY_PROFILE,
       mode: DESKTOP_DISPLAY_MODES.PHYSICAL,
@@ -89,7 +76,19 @@ test('完整物理显示方案不会保存虚拟屏身份', () => {
 
   assert.equal(updated['display-target'], 'physical')
   assert.equal(updated['display-output-name'], '\\\\.\\DISPLAY1')
-  assert.equal(updated['display-vdd-identity'], undefined)
+})
+
+test('无操作布局能够保存并往返读取', () => {
+  const profile = {
+    ...DEFAULT_DESKTOP_DISPLAY_PROFILE,
+    mode: DESKTOP_DISPLAY_MODES.VIRTUAL,
+    devicePrep: 'no_operation',
+  }
+
+  const updated = applyDesktopDisplayProfile({ name: 'Desktop' }, profile)
+
+  assert.equal(updated['display-device-prep'], 'no_operation')
+  assert.deepEqual(readDesktopDisplayProfile(updated), profile)
 })
 
 test('固定分辨率和刷新率必须使用有效格式', () => {

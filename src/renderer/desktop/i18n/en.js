@@ -105,6 +105,7 @@ export const en = {
       custom: 'Keep Custom Profile from App Management',
     },
     desktopDisplayLayouts: {
+      none: 'No Operation',
       active: 'Ensure Target Display Is Active',
       primary: 'Set as Primary Display',
       secondary: 'Set as Extended Secondary Display',
@@ -123,12 +124,6 @@ export const en = {
     desktopRefreshRateMode: 'Refresh Rate',
     desktopRefreshRateModeDesc: 'Follow global settings, use the current Moonlight request, or set a fixed refresh rate',
     desktopFixedRefreshRate: 'Fixed Refresh Rate',
-    desktopVddIdentity: 'Virtual Display Identity',
-    desktopVddIdentityDesc: 'Choose whether applications and clients share the same Foundation virtual display identity',
-    desktopVddIdentities: {
-      app: 'Shared by the Desktop App',
-      appClient: 'Separate for Desktop and Each Client',
-    },
     desktopDisconnectAction: 'When the Last Client Disconnects',
     desktopDisconnectActionDesc: 'Keep the display state for resume or immediately restore the original physical layout',
     desktopDisconnectActions: {
