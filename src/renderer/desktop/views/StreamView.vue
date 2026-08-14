@@ -160,6 +160,146 @@
         </div>
       </div>
 
+      <!-- Desktop 应用显示方案 -->
+      <div class="desktop-card fade-in display-profile-card">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="title-icon"><Monitor /></span>
+            {{ t.stream.desktopDisplayProfile }}
+          </div>
+        </div>
+        <div class="card-content settings-list">
+          <div class="setting-row display-profile-row">
+            <div class="setting-info">
+              <div class="setting-label">{{ t.stream.desktopDisplayMode }}</div>
+              <div class="setting-desc">{{ t.stream.desktopDisplayModeDesc }}</div>
+            </div>
+            <FdDropdown
+              :model-value="desktopDisplayProfile.mode"
+              @update:model-value="setDesktopDisplayProfileField('mode', $event)"
+              class="display-profile-dropdown"
+              :options="desktopDisplayModeOptions"
+              :placeholder="t.stream.desktopDisplayMode"
+            />
+          </div>
+          <div
+            v-if="desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.CURRENT_PHYSICAL || desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.PHYSICAL"
+            class="setting-row display-profile-row"
+          >
+            <div class="setting-info">
+              <div class="setting-label">{{ t.stream.desktopDisplayOutput }}</div>
+              <div class="setting-desc">{{ t.stream.desktopDisplayOutputDesc }}</div>
+            </div>
+            <FdDropdown
+              :model-value="desktopDisplayProfile.outputName"
+              @update:model-value="setDesktopDisplayProfileField('outputName', $event)"
+              class="display-profile-dropdown"
+              :options="desktopDisplayOptions"
+              :placeholder="t.stream.outputDisplayAuto"
+            />
+          </div>
+          <template v-if="desktopDisplayForced">
+            <div class="setting-row display-profile-row">
+              <div class="setting-info">
+                <div class="setting-label">{{ t.stream.desktopDisplayLayout }}</div>
+                <div class="setting-desc">{{ t.stream.desktopDisplayLayoutDesc }}</div>
+              </div>
+              <FdDropdown
+                :model-value="desktopDisplayProfile.devicePrep"
+                @update:model-value="setDesktopDisplayProfileField('devicePrep', $event)"
+                class="display-profile-dropdown"
+                :options="desktopDisplayLayoutOptions"
+                :placeholder="t.stream.desktopDisplayLayout"
+              />
+            </div>
+            <div class="setting-row display-profile-row">
+              <div class="setting-info">
+                <div class="setting-label">{{ t.stream.desktopResolutionMode }}</div>
+                <div class="setting-desc">{{ t.stream.desktopResolutionModeDesc }}</div>
+              </div>
+              <FdDropdown
+                :model-value="desktopDisplayProfile.resolutionMode"
+                @update:model-value="setDesktopDisplayProfileField('resolutionMode', $event)"
+                class="display-profile-dropdown"
+                :options="desktopResolutionModeOptions"
+                :placeholder="t.stream.desktopResolutionMode"
+              />
+            </div>
+            <div v-if="desktopDisplayProfile.resolutionMode === 'fixed'" class="setting-row sub display-profile-row">
+              <div class="setting-info">
+                <div class="setting-label">{{ t.stream.desktopFixedResolution }}</div>
+              </div>
+              <input
+                v-model.trim="desktopDisplayProfile.resolution"
+                class="setting-input display-profile-input"
+                placeholder="1920x1080"
+              />
+            </div>
+            <div class="setting-row display-profile-row">
+              <div class="setting-info">
+                <div class="setting-label">{{ t.stream.desktopRefreshRateMode }}</div>
+                <div class="setting-desc">{{ t.stream.desktopRefreshRateModeDesc }}</div>
+              </div>
+              <FdDropdown
+                :model-value="desktopDisplayProfile.refreshRateMode"
+                @update:model-value="setDesktopDisplayProfileField('refreshRateMode', $event)"
+                class="display-profile-dropdown"
+                :options="desktopRefreshRateModeOptions"
+                :placeholder="t.stream.desktopRefreshRateMode"
+              />
+            </div>
+            <div v-if="desktopDisplayProfile.refreshRateMode === 'fixed'" class="setting-row sub display-profile-row">
+              <div class="setting-info">
+                <div class="setting-label">{{ t.stream.desktopFixedRefreshRate }}</div>
+              </div>
+              <input
+                v-model.trim="desktopDisplayProfile.refreshRate"
+                class="setting-input display-profile-input"
+                placeholder="60"
+              />
+            </div>
+            <div v-if="desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.VIRTUAL" class="setting-row display-profile-row">
+              <div class="setting-info">
+                <div class="setting-label">{{ t.stream.desktopVddIdentity }}</div>
+                <div class="setting-desc">{{ t.stream.desktopVddIdentityDesc }}</div>
+              </div>
+              <FdDropdown
+                :model-value="desktopDisplayProfile.vddIdentity"
+                @update:model-value="setDesktopDisplayProfileField('vddIdentity', $event)"
+                class="display-profile-dropdown"
+                :options="desktopVddIdentityOptions"
+                :placeholder="t.stream.desktopVddIdentity"
+              />
+            </div>
+            <div class="setting-row display-profile-row">
+              <div class="setting-info">
+                <div class="setting-label">{{ t.stream.desktopDisconnectAction }}</div>
+                <div class="setting-desc">{{ t.stream.desktopDisconnectActionDesc }}</div>
+              </div>
+              <FdDropdown
+                :model-value="desktopDisplayProfile.disconnectAction"
+                @update:model-value="setDesktopDisplayProfileField('disconnectAction', $event)"
+                class="display-profile-dropdown"
+                :options="desktopDisconnectOptions"
+                :placeholder="t.stream.desktopDisconnectAction"
+              />
+            </div>
+          </template>
+          <div v-if="desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.ADAPT_CLIENT" class="profile-notice">
+            {{ t.stream.desktopDisplayAdaptNotice }}
+          </div>
+          <div v-else-if="desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.CUSTOM" class="profile-notice warning">
+            {{ t.stream.desktopDisplayCustomNotice }}
+          </div>
+          <div v-else class="profile-notice">
+            {{ t.stream.desktopDisplayOverrideNotice }}
+          </div>
+          <div v-if="!desktopDisplayProfileValid" class="profile-notice error">
+            {{ t.stream.desktopDisplayValidationError }}
+          </div>
+        </div>
+      </div>
+
       <!-- 启动模式 -->
       <div class="desktop-card fade-in">
         <div class="card-header">
@@ -315,7 +455,7 @@
       <!-- 保存 -->
       <div class="actions-bar fade-in">
         <span v-if="saveMsg" class="save-msg" :class="saveMsg.type">{{ saveMsg.text }}</span>
-        <button class="desktop-btn primary" :disabled="saving" @click="saveSettings">
+        <button class="desktop-btn primary" :disabled="saving || !desktopDisplayProfileValid" @click="saveSettings">
           {{ saving ? t.stream.saving : t.stream.saveSettings }}
         </button>
       </div>
@@ -325,7 +465,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { DataAnalysis, Film, Monitor, Mouse, Promotion, Sunny } from '@element-plus/icons-vue'
 import PillGroup from '../components/PillGroup.vue'
 import FdDropdown from '../components/FdDropdown.vue'
@@ -333,6 +473,14 @@ import { vdd as vddApi, vmouse as vmouseApi } from '../../tauri-adapter.js'
 import { installVddWithRecovery } from '../../composables/vddInstallRecovery.js'
 import { useVddStatusLabel } from '../../composables/useVddStatusLabel.js'
 import { useI18n } from '../i18n/index.js'
+import {
+  DEFAULT_DESKTOP_DISPLAY_PROFILE,
+  DESKTOP_DISPLAY_MODES,
+  findDesktopAppIndex,
+  readDesktopDisplayProfile,
+  updateDesktopApplication,
+  validateDesktopDisplayProfile,
+} from '../utils/desktopDisplayProfile.js'
 
 const { t } = useI18n()
 
@@ -343,7 +491,7 @@ const saving = ref(false)
 const saveMsg = ref(null)
 const displays = ref([])
 const autoLaunchDesktop = ref(false)
-const appsData = ref(null)  // 原始 apps.json 数据
+const desktopDisplayProfile = reactive({ ...DEFAULT_DESKTOP_DISPLAY_PROFILE })
 
 const configData = ref({
   hevc_mode: 2,
@@ -389,6 +537,46 @@ const adaptModes = computed(() => [
   { value: 2, label: t.value.stream.adaptMode.manual },
 ])
 
+const desktopDisplayModeOptions = computed(() => [
+  { value: DESKTOP_DISPLAY_MODES.ADAPT_CLIENT, label: t.value.stream.desktopDisplayModes.adaptClient },
+  { value: DESKTOP_DISPLAY_MODES.CURRENT_PHYSICAL, label: t.value.stream.desktopDisplayModes.currentPhysical },
+  { value: DESKTOP_DISPLAY_MODES.PHYSICAL, label: t.value.stream.desktopDisplayModes.physical },
+  { value: DESKTOP_DISPLAY_MODES.VIRTUAL, label: t.value.stream.desktopDisplayModes.virtual },
+  { value: DESKTOP_DISPLAY_MODES.CUSTOM, label: t.value.stream.desktopDisplayModes.custom },
+])
+
+const desktopDisplayLayoutOptions = computed(() => [
+  { value: 'ensure_active', label: t.value.stream.desktopDisplayLayouts.active },
+  { value: 'ensure_primary', label: t.value.stream.desktopDisplayLayouts.primary },
+  { value: 'ensure_secondary', label: t.value.stream.desktopDisplayLayouts.secondary },
+  { value: 'ensure_only_display', label: t.value.stream.desktopDisplayLayouts.only },
+])
+
+const desktopResolutionModeOptions = computed(() => [
+  { value: '', label: t.value.stream.desktopDisplayValues.inherit },
+  { value: 'client', label: t.value.stream.desktopDisplayValues.client },
+  { value: 'fixed', label: t.value.stream.desktopDisplayValues.fixed },
+])
+
+const desktopRefreshRateModeOptions = computed(() => desktopResolutionModeOptions.value)
+
+const desktopVddIdentityOptions = computed(() => [
+  { value: '', label: t.value.stream.desktopDisplayValues.inherit },
+  { value: 'app', label: t.value.stream.desktopVddIdentities.app },
+  { value: 'app-client', label: t.value.stream.desktopVddIdentities.appClient },
+])
+
+const desktopDisconnectOptions = computed(() => [
+  { value: 'keep', label: t.value.stream.desktopDisconnectActions.keep },
+  { value: 'restore', label: t.value.stream.desktopDisconnectActions.restore },
+])
+
+const desktopDisplayForced = computed(() =>
+  [DESKTOP_DISPLAY_MODES.PHYSICAL, DESKTOP_DISPLAY_MODES.VIRTUAL].includes(desktopDisplayProfile.mode)
+)
+
+const desktopDisplayProfileValid = computed(() => validateDesktopDisplayProfile(desktopDisplayProfile))
+
 const displayOptions = computed(() => {
   const opts = [{ value: '', label: t.value.stream.outputDisplayAuto }]
   for (const d of displays.value) {
@@ -397,6 +585,15 @@ const displayOptions = computed(() => {
     } else {
       opts.push(d)
     }
+  }
+  return opts
+})
+
+const desktopDisplayOptions = computed(() => {
+  const opts = [...displayOptions.value]
+  const current = desktopDisplayProfile.outputName
+  if (current && !opts.some((option) => option.value === current)) {
+    opts.push({ value: current, label: `${current} (${t.value.stream.desktopDisplayCurrentValue})` })
   }
   return opts
 })
@@ -421,6 +618,10 @@ function normalizeDisplayDevices(devices) {
       return value ? { value, label: label || value } : null
     })
     .filter(Boolean)
+}
+
+function setDesktopDisplayProfileField(field, value) {
+  desktopDisplayProfile[field] = value
 }
 
 function toggleCodec(key) {
@@ -480,13 +681,14 @@ async function loadSettings() {
     try {
       const appsResp = await apiFetch('/api/apps')
       const appsList = appsResp.apps || appsResp || []
-      appsData.value = { apps: appsList, env: appsResp.env || {} }
-      const desktopApp = appsList.find(isDesktopApp)
+      const desktopIdx = findDesktopAppIndex(appsList)
+      const desktopApp = desktopIdx >= 0 ? appsList[desktopIdx] : null
       if (desktopApp) {
         const detached = desktopApp.detached || []
         autoLaunchDesktop.value = detached.some(cmd => 
           cmd.includes('sunshine-gui') && (cmd.includes('--desktop') || cmd.includes('-d'))
         )
+        Object.assign(desktopDisplayProfile, readDesktopDisplayProfile(desktopApp))
       }
     } catch (e) {
       // apps load failed
@@ -531,8 +733,17 @@ async function saveSettings() {
       return
     }
 
-    // 保存 Desktop 应用的启动模式
-    await saveDesktopLaunchMode()
+    // 重新读取最新应用列表，只更新 Desktop，避免覆盖其他页面刚保存的应用。
+    try {
+      await saveDesktopApplicationSettings()
+    } catch (error) {
+      const detail = error?.message || String(error || '')
+      saveMsg.value = {
+        type: 'error',
+        text: `${t.value.stream.msg.desktopAppSaveFailed}${detail ? `: ${detail}` : ''}`,
+      }
+      return
+    }
 
     if (!saveMsg.value) {
       saveMsg.value = { type: 'success', text: t.value.stream.msg.saveSuccess }
@@ -546,42 +757,26 @@ async function saveSettings() {
 }
 
 const GUI_DESKTOP_CMD = '.\\assets\\gui\\sunshine-gui.exe --desktop'
-const DESKTOP_APP_NAMES = ['Desktop', '桌面']
-function isDesktopApp(app) { return DESKTOP_APP_NAMES.includes(app.name) }
 
-async function saveDesktopLaunchMode() {
-  if (!appsData.value) return
-  const appsList = appsData.value.apps || []
-  const desktopIdx = appsList.findIndex(isDesktopApp)
-  if (desktopIdx === -1) return
+async function saveDesktopApplicationSettings() {
+  const appsResp = await apiFetch('/api/apps')
+  const appsList = appsResp.apps || appsResp || []
+  const desktopIdx = findDesktopAppIndex(appsList)
+  if (desktopIdx === -1) throw new Error(t.value.stream.msg.desktopAppNotFound)
 
-  const desktopApp = { ...appsList[desktopIdx] }
-  let detached = [...(desktopApp.detached || [])]
-
-  // 移除旧的 Desktop UI 启动命令
-  detached = detached.filter(cmd => 
-    !(cmd.includes('sunshine-gui') && (cmd.includes('--desktop') || cmd.includes('-d')))
-  )
-
-  // 如果开启了自动启动，添加命令
-  if (autoLaunchDesktop.value) {
-    detached.push(GUI_DESKTOP_CMD)
-  }
-
-  desktopApp.detached = detached
-
-  try {
-    const editApp = { ...desktopApp, index: desktopIdx }
-    const appsResult = await apiFetch('/api/apps', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ apps: appsList, editApp }),
-    })
-    if (appsResult.status?.toString() !== 'true') {
-      saveMsg.value = { type: 'error', text: t.value.stream.msg.launchModeSaveFailed + ': ' + (appsResult.error || '') }
-    }
-  } catch (e) {
-    saveMsg.value = { type: 'error', text: t.value.stream.msg.launchModeSaveFailed }
+  const desktopApp = updateDesktopApplication(appsList[desktopIdx], {
+    autoLaunchDesktop: autoLaunchDesktop.value,
+    displayProfile: desktopDisplayProfile,
+    guiDesktopCommand: GUI_DESKTOP_CMD,
+  })
+  const editApp = { ...desktopApp, index: desktopIdx }
+  const appsResult = await apiFetch('/api/apps', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ apps: appsList, editApp }),
+  })
+  if (appsResult.status?.toString() !== 'true') {
+    throw new Error(appsResult.error || t.value.stream.msg.desktopAppSaveFailed)
   }
 }
 
@@ -1018,6 +1213,57 @@ async function uninstallVmouse() {
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+
+.display-profile-dropdown {
+  min-width: 260px;
+}
+
+.display-profile-card {
+  position: relative;
+  z-index: 3;
+}
+
+.profile-notice {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(var(--fd-accent-rgb, 0, 255, 245), 0.2);
+  border-radius: 8px;
+  background: rgba(var(--fd-accent-rgb, 0, 255, 245), 0.06);
+  color: rgba(var(--fd-text-primary-rgb, 255, 255, 255), 0.65);
+  font-size: 13px;
+  line-height: 1.55;
+
+  &.warning {
+    border-color: rgba(251, 191, 36, 0.3);
+    background: rgba(251, 191, 36, 0.08);
+  }
+
+  &.error {
+    border-color: rgba(248, 113, 113, 0.35);
+    background: rgba(248, 113, 113, 0.08);
+    color: #f87171;
+  }
+}
+
+.display-profile-input {
+  width: 260px;
+}
+
+@media (max-width: 700px) {
+  .display-profile-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .display-profile-dropdown {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .display-profile-input {
+    width: 100%;
+  }
 }
 
 @media (max-width: 700px) {
