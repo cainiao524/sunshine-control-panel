@@ -183,7 +183,7 @@
             />
           </div>
           <div
-            v-if="desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.CURRENT_PHYSICAL || desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.PHYSICAL"
+            v-if="desktopDisplayProfile.mode === DESKTOP_DISPLAY_MODES.PHYSICAL"
             class="setting-row display-profile-row"
           >
             <div class="setting-info">
@@ -526,7 +526,6 @@ const adaptModes = computed(() => [
 
 const desktopDisplayModeOptions = computed(() => [
   { value: DESKTOP_DISPLAY_MODES.ADAPT_CLIENT, label: t.value.stream.desktopDisplayModes.adaptClient },
-  { value: DESKTOP_DISPLAY_MODES.CURRENT_PHYSICAL, label: t.value.stream.desktopDisplayModes.currentPhysical },
   { value: DESKTOP_DISPLAY_MODES.PHYSICAL, label: t.value.stream.desktopDisplayModes.physical },
   { value: DESKTOP_DISPLAY_MODES.VIRTUAL, label: t.value.stream.desktopDisplayModes.virtual },
   { value: DESKTOP_DISPLAY_MODES.CUSTOM, label: t.value.stream.desktopDisplayModes.custom },

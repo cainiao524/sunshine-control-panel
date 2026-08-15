@@ -1,6 +1,5 @@
 export const DESKTOP_DISPLAY_MODES = Object.freeze({
   ADAPT_CLIENT: 'adapt-client',
-  CURRENT_PHYSICAL: 'current-physical',
   PHYSICAL: 'physical',
   VIRTUAL: 'virtual',
   CUSTOM: 'custom',
@@ -30,7 +29,6 @@ export function readDesktopDisplayProfile(app) {
   const target = String(app?.['display-target'] || '')
   let mode = DESKTOP_DISPLAY_MODES.CUSTOM
   if (!target) mode = DESKTOP_DISPLAY_MODES.ADAPT_CLIENT
-  else if (target === 'physical-current') mode = DESKTOP_DISPLAY_MODES.CURRENT_PHYSICAL
   else if (target === 'physical') mode = DESKTOP_DISPLAY_MODES.PHYSICAL
   else if (target === 'virtual') mode = DESKTOP_DISPLAY_MODES.VIRTUAL
 
@@ -64,13 +62,6 @@ export function applyDesktopDisplayProfile(app, profile) {
     Object.entries(app).filter(([key]) => !key.startsWith('display-')),
   )
   if (profile?.mode === DESKTOP_DISPLAY_MODES.ADAPT_CLIENT) return updated
-
-  if (profile?.mode === DESKTOP_DISPLAY_MODES.CURRENT_PHYSICAL) {
-    updated['display-target'] = 'physical-current'
-    const outputName = String(profile.outputName || '').trim()
-    if (outputName) updated['display-output-name'] = outputName
-    return updated
-  }
 
   if (![DESKTOP_DISPLAY_MODES.PHYSICAL, DESKTOP_DISPLAY_MODES.VIRTUAL].includes(profile?.mode)) {
     throw new Error(`Unsupported Desktop display mode: ${profile?.mode}`)

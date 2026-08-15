@@ -99,7 +99,6 @@ export const zh = {
     desktopDisplayCurrentValue: '当前配置',
     desktopDisplayModes: {
       adaptClient: '自动适配基地版 Moonlight（推荐）',
-      currentPhysical: '原样串流当前物理屏',
       physical: '强制使用物理显示器',
       virtual: '强制使用基地虚拟显示器',
       custom: '保留应用管理中的自定义方案',

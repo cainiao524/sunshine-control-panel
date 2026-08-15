@@ -28,23 +28,6 @@ test('默认 Desktop 开放基地版 Moonlight 显示参数并保留原应用功
   assert.deepEqual(updated['menu-cmd'], [{ name: '触摸键盘' }])
 })
 
-test('原样物理屏只保存目标和可选显示器', () => {
-  const updated = applyDesktopDisplayProfile(
-    { name: 'Desktop', 'display-resolution': '1920x1080' },
-    {
-      ...DEFAULT_DESKTOP_DISPLAY_PROFILE,
-      mode: DESKTOP_DISPLAY_MODES.CURRENT_PHYSICAL,
-      outputName: '  \\\\.\\DISPLAY2  ',
-    },
-  )
-
-  assert.deepEqual(updated, {
-    name: 'Desktop',
-    'display-target': 'physical-current',
-    'display-output-name': '\\\\.\\DISPLAY2',
-  })
-})
-
 test('完整虚拟显示方案能够往返读取和保存', () => {
   const profile = {
     ...DEFAULT_DESKTOP_DISPLAY_PROFILE,
@@ -77,6 +60,7 @@ test('完整物理显示方案保存指定显示器', () => {
   assert.equal(updated['display-target'], 'physical')
   assert.equal(updated['display-output-name'], '\\\\.\\DISPLAY1')
 })
+
 
 test('无操作布局能够保存并往返读取', () => {
   const profile = {

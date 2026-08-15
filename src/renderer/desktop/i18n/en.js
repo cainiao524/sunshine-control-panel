@@ -99,7 +99,6 @@ export const en = {
     desktopDisplayCurrentValue: 'Current configuration',
     desktopDisplayModes: {
       adaptClient: 'Adapt to Foundation Moonlight (Recommended)',
-      currentPhysical: 'Stream Current Physical Display Unchanged',
       physical: 'Force Physical Display',
       virtual: 'Force Foundation Virtual Display',
       custom: 'Keep Custom Profile from App Management',
