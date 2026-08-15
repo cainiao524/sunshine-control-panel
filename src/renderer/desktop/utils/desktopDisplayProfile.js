@@ -12,6 +12,7 @@ export const DEFAULT_DESKTOP_DISPLAY_PROFILE = Object.freeze({
   resolution: '',
   refreshRateMode: '',
   refreshRate: '',
+  dynamicResolutionMode: '',
   outputName: '',
   disconnectAction: 'keep',
 })
@@ -39,6 +40,7 @@ export function readDesktopDisplayProfile(app) {
     resolution: String(app?.['display-resolution'] || ''),
     refreshRateMode: String(app?.['display-refresh-rate-mode'] || ''),
     refreshRate: String(app?.['display-refresh-rate'] || ''),
+    dynamicResolutionMode: String(app?.['display-dynamic-resolution-follow-display'] || ''),
     outputName: String(app?.['display-output-name'] || ''),
     disconnectAction: String(app?.['display-disconnect-action'] || DEFAULT_DESKTOP_DISPLAY_PROFILE.disconnectAction),
   }
@@ -82,6 +84,10 @@ export function applyDesktopDisplayProfile(app, profile) {
     if (profile.refreshRateMode === 'fixed') {
       updated['display-refresh-rate'] = String(profile.refreshRate || '').trim()
     }
+  }
+
+  if (['enabled', 'disabled'].includes(profile.dynamicResolutionMode)) {
+    updated['display-dynamic-resolution-follow-display'] = profile.dynamicResolutionMode
   }
 
   if (profile.mode === DESKTOP_DISPLAY_MODES.PHYSICAL) {

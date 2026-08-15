@@ -112,8 +112,12 @@ export const zh = {
     },
     desktopDisplayValues: {
       inherit: '跟随全局设置',
+      resolutionNoOperation: '忽略客户端的分辨率要求',
+      refreshRateNoOperation: '禁用',
       client: '跟随当前连接设备',
       fixed: '使用固定值',
+      enabled: '启用',
+      disabled: '禁用',
     },
     desktopDisplayLayout: '显示布局',
     desktopDisplayLayoutDesc: '使用 Sunshine 基地版现有的显示器准备方式，不额外执行脚本',
@@ -123,6 +127,8 @@ export const zh = {
     desktopRefreshRateMode: '刷新率',
     desktopRefreshRateModeDesc: '可跟随全局、使用 Moonlight 本次请求，或指定固定刷新率',
     desktopFixedRefreshRate: '固定刷新率',
+    desktopDynamicResolutionMode: '串流中跟随主机分辨率变化',
+    desktopDynamicResolutionModeDesc: '跟随全局设置，或为 Desktop 强制启用或禁用动态分辨率跟随',
     desktopDisconnectAction: '最后一个客户端断开时',
     desktopDisconnectActionDesc: '保留当前显示状态等待恢复，或立即恢复原来的物理显示布局',
     desktopDisconnectActions: {

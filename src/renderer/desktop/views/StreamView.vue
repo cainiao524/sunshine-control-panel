@@ -260,6 +260,19 @@
             </div>
             <div class="setting-row display-profile-row">
               <div class="setting-info">
+                <div class="setting-label">{{ t.stream.desktopDynamicResolutionMode }}</div>
+                <div class="setting-desc">{{ t.stream.desktopDynamicResolutionModeDesc }}</div>
+              </div>
+              <FdDropdown
+                :model-value="desktopDisplayProfile.dynamicResolutionMode"
+                @update:model-value="setDesktopDisplayProfileField('dynamicResolutionMode', $event)"
+                class="display-profile-dropdown"
+                :options="desktopDynamicResolutionModeOptions"
+                :placeholder="t.stream.desktopDynamicResolutionMode"
+              />
+            </div>
+            <div class="setting-row display-profile-row">
+              <div class="setting-info">
                 <div class="setting-label">{{ t.stream.desktopDisconnectAction }}</div>
                 <div class="setting-desc">{{ t.stream.desktopDisconnectActionDesc }}</div>
               </div>
@@ -541,11 +554,23 @@ const desktopDisplayLayoutOptions = computed(() => [
 
 const desktopResolutionModeOptions = computed(() => [
   { value: '', label: t.value.stream.desktopDisplayValues.inherit },
+  { value: 'no_operation', label: t.value.stream.desktopDisplayValues.resolutionNoOperation },
   { value: 'client', label: t.value.stream.desktopDisplayValues.client },
   { value: 'fixed', label: t.value.stream.desktopDisplayValues.fixed },
 ])
 
-const desktopRefreshRateModeOptions = computed(() => desktopResolutionModeOptions.value)
+const desktopRefreshRateModeOptions = computed(() => [
+  { value: '', label: t.value.stream.desktopDisplayValues.inherit },
+  { value: 'no_operation', label: t.value.stream.desktopDisplayValues.refreshRateNoOperation },
+  { value: 'client', label: t.value.stream.desktopDisplayValues.client },
+  { value: 'fixed', label: t.value.stream.desktopDisplayValues.fixed },
+])
+
+const desktopDynamicResolutionModeOptions = computed(() => [
+  { value: '', label: t.value.stream.desktopDisplayValues.inherit },
+  { value: 'enabled', label: t.value.stream.desktopDisplayValues.enabled },
+  { value: 'disabled', label: t.value.stream.desktopDisplayValues.disabled },
+])
 
 const desktopDisconnectOptions = computed(() => [
   { value: 'keep', label: t.value.stream.desktopDisconnectActions.keep },

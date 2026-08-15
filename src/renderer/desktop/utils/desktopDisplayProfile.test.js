@@ -37,6 +37,7 @@ test('完整虚拟显示方案能够往返读取和保存', () => {
     resolution: '2560x1600',
     refreshRateMode: 'fixed',
     refreshRate: '120',
+    dynamicResolutionMode: 'disabled',
     disconnectAction: 'restore',
   }
   const updated = applyDesktopDisplayProfile({ name: 'Desktop' }, profile)
@@ -72,6 +73,23 @@ test('无操作布局能够保存并往返读取', () => {
   const updated = applyDesktopDisplayProfile({ name: 'Desktop' }, profile)
 
   assert.equal(updated['display-device-prep'], 'no_operation')
+  assert.deepEqual(readDesktopDisplayProfile(updated), profile)
+})
+
+test('分辨率刷新率无操作和动态分辨率覆盖能够保存', () => {
+  const profile = {
+    ...DEFAULT_DESKTOP_DISPLAY_PROFILE,
+    mode: DESKTOP_DISPLAY_MODES.VIRTUAL,
+    resolutionMode: 'no_operation',
+    refreshRateMode: 'no_operation',
+    dynamicResolutionMode: 'enabled',
+  }
+
+  const updated = applyDesktopDisplayProfile({ name: 'Desktop' }, profile)
+
+  assert.equal(updated['display-resolution-mode'], 'no_operation')
+  assert.equal(updated['display-refresh-rate-mode'], 'no_operation')
+  assert.equal(updated['display-dynamic-resolution-follow-display'], 'enabled')
   assert.deepEqual(readDesktopDisplayProfile(updated), profile)
 })
 

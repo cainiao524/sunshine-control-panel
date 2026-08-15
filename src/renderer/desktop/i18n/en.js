@@ -112,8 +112,12 @@ export const en = {
     },
     desktopDisplayValues: {
       inherit: 'Follow Global Settings',
+      resolutionNoOperation: 'Ignore the Client Resolution Request',
+      refreshRateNoOperation: 'Disabled',
       client: 'Follow Current Client',
       fixed: 'Use Fixed Value',
+      enabled: 'Enabled',
+      disabled: 'Disabled',
     },
     desktopDisplayLayout: 'Display Layout',
     desktopDisplayLayoutDesc: 'Use the existing Foundation Sunshine display preparation without additional scripts',
@@ -123,6 +127,8 @@ export const en = {
     desktopRefreshRateMode: 'Refresh Rate',
     desktopRefreshRateModeDesc: 'Follow global settings, use the current Moonlight request, or set a fixed refresh rate',
     desktopFixedRefreshRate: 'Fixed Refresh Rate',
+    desktopDynamicResolutionMode: 'Follow Host Resolution Changes During Streaming',
+    desktopDynamicResolutionModeDesc: 'Follow the global setting or force dynamic resolution following on or off for Desktop',
     desktopDisconnectAction: 'When the Last Client Disconnects',
     desktopDisconnectActionDesc: 'Keep the display state for resume or immediately restore the original physical layout',
     desktopDisconnectActions: {
