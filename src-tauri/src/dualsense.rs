@@ -443,9 +443,8 @@ fn validate_sidecar_package_manifest(
             .map_err(|_| "DS5-PKG-002: the DualSense package URL is invalid".to_string())?;
         let valid_url = url.scheme() == "https"
             && url.host_str() == Some("github.com")
-            && url
-                .path()
-                .starts_with("/AlkaidLab/foundation-sunshine/releases/download/")
+            && url.path().contains("/releases/download/")
+            && url.path_segments().map_or(0, Iterator::count) >= 4
             && url
                 .path_segments()
                 .and_then(Iterator::last)
@@ -2558,6 +2557,17 @@ mod tests {
             size: 1024,
         };
         assert!(validate_sidecar_package_manifest(manifest.clone()).is_ok());
+
+        // Any GitHub repository's release download path is accepted; the
+        // package digest is independently verified after download.
+        let fork_repo = SidecarPackageManifest {
+            download_url: format!(
+                "https://github.com/cainiao524/foundation-sunshine-appdisplay/releases/download/v1/{}",
+                super::SIDECAR_PACKAGE_ASSET
+            ),
+            ..manifest.clone()
+        };
+        assert!(validate_sidecar_package_manifest(fork_repo).is_ok());
 
         let untrusted = SidecarPackageManifest {
             download_url: format!("https://example.com/{}", super::SIDECAR_PACKAGE_ASSET),
